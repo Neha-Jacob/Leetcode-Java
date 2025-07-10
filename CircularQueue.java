@@ -1,14 +1,12 @@
-import java.util.*;
-
 class MyCircularQueue {
     
-    private List<Integer> circularQueue;
+    private int[] circularQueue; // TODO: Use array instead of ArrayList
     private int head;
     private int tail;
     private int size;
 
     public MyCircularQueue(int k) {
-        circularQueue = new ArrayList<Integer>(k);
+        circularQueue = new int[k];
         head = -1;
         tail = -1;
         size = k;
@@ -25,11 +23,8 @@ class MyCircularQueue {
         } else {
             tail = (tail + 1) % size;
         }
-        if (circularQueue.size() <= tail) {
-            circularQueue.add(value);
-        } else {
-            circularQueue.set(tail, value);
-        }
+        
+        circularQueue[tail] = value;
         System.out.printf("Queued %d at %d%n", value, tail);
         return true;
     }
@@ -39,10 +34,9 @@ class MyCircularQueue {
             System.out.println("Queue empty");
             return false;
         }
-        int value = circularQueue.get(head);
+        int value = circularQueue[head];
         System.out.printf("Dequeued %d at %d%n", value, head);
         if (head == tail) {
-            // Queue becomes empty
             head = -1;
             tail = -1;
         } else {
@@ -53,12 +47,12 @@ class MyCircularQueue {
     
     public int Front() {
         if (isEmpty()) return -1;
-        return circularQueue.get(head);
+        return circularQueue[head];
     }
 
     public int Rear() {
         if (isEmpty()) return -1;
-        return circularQueue.get(tail);
+        return circularQueue[tail];
     }
 
     public boolean isEmpty() {
